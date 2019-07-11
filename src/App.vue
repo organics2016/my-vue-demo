@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -7,6 +7,23 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+import CanvasNest from 'canvas-nest.js'
+
+export default {
+  name: 'app',
+  mounted () {
+    const config = {
+      color: '255,0,0',
+      count: 88
+    }
+
+    /* eslint-disable no-new */
+    new CanvasNest(this.$refs.app, config)
+  }
+}
+</script>
 
 <style>
 #app {
