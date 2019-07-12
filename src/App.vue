@@ -14,9 +14,12 @@ import CanvasNest from 'canvas-nest.js'
 export default {
   name: 'app',
   mounted () {
+    const f = 255
     const config = {
-      color: '255,0,0',
-      count: 88
+      color: Math.round(Math.random() * f) + ',' +
+        Math.round(Math.random() * f) + ',' +
+        Math.round(Math.random() * f),
+      opacity: 1
     }
 
     /* eslint-disable no-new */
@@ -26,13 +29,21 @@ export default {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100%;
+  width: 100%;
 }
+
 #nav {
   padding: 30px;
 }
@@ -44,5 +55,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+  }
 </style>
