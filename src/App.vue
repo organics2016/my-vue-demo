@@ -60,7 +60,7 @@
             <BreadcrumbItem>Components</BreadcrumbItem>
             <BreadcrumbItem>Layout</BreadcrumbItem>
           </Breadcrumb>
-          <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+          <Content :style="{padding: '24px', minHeight: '800px', background: '#fff'}">
             Content
           </Content>
         </Layout>
