@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import Router from './router'
 
 import ViewUI from 'view-design'
@@ -11,10 +10,9 @@ import App from './App.vue'
 Vue.config.productionTip = false
 
 // registe
-Vue.use(VueRouter)
 Vue.use(ViewUI)
 
 new Vue({
-  router: new VueRouter({ routes: Router.routes }),
+  router: Router,
   render: h => h(App)
 }).$mount('#app')
