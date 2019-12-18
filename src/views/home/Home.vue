@@ -60,9 +60,9 @@
 </template>
 
 <script>
-  import {menus} from './menus.js'
+import { menus } from './menus.js'
 
-  export default {
+export default {
   name: 'home',
   data: function () {
     return {
