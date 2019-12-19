@@ -9,7 +9,7 @@ export default {
   name: 'app',
 
   mounted () {
-    this.$route.replace({ path: 'home' })
+    this.$router.replace({ name: 'home' })
   }
 }
 </script>

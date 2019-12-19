@@ -39,14 +39,14 @@ function matchAuth (menus, permissions, admin) {
     return []
   }
 
-  return menus.map((item) => {
-    if (permissions.includes(item.auth)) {
-      let result = Object.assign({}, item)
-      if (result.children) {
-        result.children = matchAuth(result.children, permissions, false)
-      }
-      return result
+  return menus.filter((item) => {
+    return permissions.includes(item.auth)
+  }).map((item) => {
+    const result = Object.assign({}, item)
+    if (result.children) {
+      result.children = matchAuth(result.children, permissions, false)
     }
+    return result
   })
 }
 

@@ -27,13 +27,13 @@
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
           <Menu theme="light" width="auto">
-            <div v-for="menu in menus">
+            <div v-for="menu in menus" :key="menu.path">
               <Submenu :name="menu.path" v-show="menu.children">
                 <template slot="title">
                   <Icon :type="menu.icon"/>
                   {{menu.name}}
                 </template>
-                <MenuItem v-for="children in menu.children" :name="children.path">
+                <MenuItem v-for="children in menu.children" :name="children.path" :key="children.path">
                   {{children.name}}
                 </MenuItem>
               </Submenu>
@@ -66,11 +66,13 @@ export default {
   name: 'home',
   data: function () {
     return {
-      menus: menus(null, true)
+      menus: []
     }
   },
   mounted () {
-
+    const permissions = ['/item1', '/item1/option1']
+    this.menus = menus(permissions, true)
+    console.log(this.menus)
   }
 }
 </script>
