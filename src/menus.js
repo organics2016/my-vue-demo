@@ -1,30 +1,31 @@
+import Home from './views/home/Home.vue'
+import Test from './views/test/Test.vue'
 
 const menuData = [
   {
     name: '控制台首页',
     icon: 'ios-navigate',
     path: '/home',
-    auth: '/home'
+    auth: '/home',
+    component: Home
   },
   {
     name: 'Item 1',
     icon: 'ios-navigate',
-    path: '/item1',
     auth: '/item1',
     children: [{
       name: 'Option 1',
       path: '/item1/option1',
-      auth: '/item1/option1'
+      auth: '/item1/option1',
+      component: Test
     }]
   },
   {
     name: 'Item 2',
     icon: 'ios-navigate',
-    path: '/item2',
     auth: '/item2',
     children: [{
       name: 'Option 1',
-      path: '/item2/option1',
       auth: '/item2/option1'
     }]
   }
@@ -50,4 +51,14 @@ function matchAuth (menus, permissions, admin) {
   })
 }
 
-export const menus = (permissions, admin) => matchAuth(menuData, permissions, admin)
+function deepFlatten (routes) {
+  const flatten = (routes) => [].concat(...routes)
+  return flatten(
+    routes.map(route => Array.isArray(route.children) ? deepFlatten(route.children) : route)
+      .filter(route => 'path' in route)
+  )
+}
+
+export const getMenus = (permissions, admin) => matchAuth(menuData, permissions, admin)
+
+export const getRouter = () => deepFlatten(menuData)
