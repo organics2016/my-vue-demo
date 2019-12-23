@@ -27,19 +27,19 @@
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
           <Menu theme="light" width="auto">
-            <div v-for="menu in menus" :key="menu.name">
-              <Submenu :name="menu.name" v-show="menu.children">
+            <div v-for="menu in menus" :key="menu.auth">
+              <Submenu :name="menu.auth" v-show="menu.children">
                 <template slot="title">
                   <Icon :type="menu.icon"/>
                   {{menu.name}}
                 </template>
-                <MenuItem v-for="children in menu.children" :name="children.name" :key="children.name">
-                  {{children.name}}
+                <MenuItem v-for="children in menu.children" :name="children.auth" :key="children.auth" :to="children.path">
+                    {{children.name}}
                 </MenuItem>
               </Submenu>
-              <MenuItem v-show="!menu.children" :name="menu.name">
-                <Icon :type="menu.icon"/>
-                {{menu.name}}
+              <MenuItem v-show="!menu.children" :name="menu.auth" :to="menu.path">
+                  <Icon :type="menu.icon"/>
+                  {{menu.name}}
               </MenuItem>
             </div>
           </Menu>
@@ -60,7 +60,8 @@
 </template>
 
 <script>
-import { menus } from '../../menus.js'
+// import { menus } from '../../menus.js'
+import { adminMenus } from '../../menus.js'
 
 export default {
   name: 'home',
@@ -71,21 +72,22 @@ export default {
   },
   mounted () {
     const permissions = ['/item1', '/item1/option1']
-    this.menus = menus(permissions)
+    this.menus = adminMenus(permissions)
     console.log(this.menus)
   }
 }
 </script>
 
 <style scoped>
-  .layout{
+  .layout {
     border: 1px solid #d7dde4;
     background: #f5f7f9;
     position: relative;
     border-radius: 4px;
     overflow: hidden;
   }
-  .layout-logo{
+
+  .layout-logo {
     width: 100px;
     height: 30px;
     background: #5b6270;
@@ -95,7 +97,8 @@ export default {
     top: 15px;
     left: 20px;
   }
-  .layout-nav{
+
+  .layout-nav {
     width: 420px;
     margin: 0 auto;
     margin-right: 20px;

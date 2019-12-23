@@ -18,7 +18,6 @@ Vue.use(Router)
 console.log(routes())
 
 const routeConfig = {
-  base: '/app',
   routes: routes()
 }
 

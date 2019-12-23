@@ -1,5 +1,6 @@
 import Home from './views/home/Home.vue'
 import Test from './views/test/Test.vue'
+import HelloWorld from './views/hello/HelloWorld.vue'
 
 const menuData = [
   {
@@ -26,10 +27,14 @@ const menuData = [
     auth: '/item2',
     children: [{
       name: 'Option 1',
-      auth: '/item2/option1'
+      path: '/item2/option1',
+      auth: '/item2/option1',
+      component: HelloWorld
     }]
   }
 ]
+
+// const uuidv4 = require('uuid/v4')
 
 function matchAuth (menus, permissions, admin) {
   if (admin) {
