@@ -11,7 +11,7 @@ export default {
   name: 'app',
 
   mounted () {
-    this.$router.replace('/')
+    this.$router.replace({ name: '控制台首页' })
   }
 }
 </script>

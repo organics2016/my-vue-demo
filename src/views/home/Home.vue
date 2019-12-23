@@ -27,17 +27,17 @@
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
           <Menu theme="light" width="auto">
-            <div v-for="menu in menus" :key="menu.path">
-              <Submenu :name="menu.path" v-show="menu.children">
+            <div v-for="menu in menus" :key="menu.name">
+              <Submenu :name="menu.name" v-show="menu.children">
                 <template slot="title">
                   <Icon :type="menu.icon"/>
                   {{menu.name}}
                 </template>
-                <MenuItem v-for="children in menu.children" :name="children.path" :key="children.path">
+                <MenuItem v-for="children in menu.children" :name="children.name" :key="children.name">
                   {{children.name}}
                 </MenuItem>
               </Submenu>
-              <MenuItem v-show="!menu.children" :name="menu.path">
+              <MenuItem v-show="!menu.children" :name="menu.name">
                 <Icon :type="menu.icon"/>
                 {{menu.name}}
               </MenuItem>
@@ -71,7 +71,7 @@ export default {
   },
   mounted () {
     const permissions = ['/item1', '/item1/option1']
-    this.menus = menus(permissions, true)
+    this.menus = menus(permissions)
     console.log(this.menus)
   }
 }

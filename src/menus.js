@@ -51,14 +51,25 @@ function matchAuth (menus, permissions, admin) {
   })
 }
 
-function deepFlatten (routes) {
-  const flatten = (routes) => [].concat(...routes)
+function menus2Router (menus) {
+  const flatten = (menus) => [].concat(...menus)
+
   return flatten(
-    routes.map(route => Array.isArray(route.children) ? deepFlatten(route.children) : route)
-      .filter(route => 'path' in route)
-  )
+    menus.map((menu) => {
+      const route = {
+        path: menu.path,
+        name: menu.name,
+        component: menu.component
+      }
+
+      return Array.isArray(menu.children) ? menus2Router(menu.children) : route
+    })
+
+  ).filter(route => route.path !== undefined)
 }
 
-export const getMenus = (permissions, admin) => matchAuth(menuData, permissions, admin)
+export const menus = (permissions) => matchAuth(menuData, permissions, false)
 
-export const getRouter = () => deepFlatten(menuData)
+export const adminMenus = () => matchAuth(menuData, null, true)
+
+export const routes = () => menus2Router(menuData)
