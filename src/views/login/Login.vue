@@ -10,13 +10,13 @@
 
           <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
             <span class="label-input100">滴滴滴滴滴</span>
-            <input class="input100" type="text" name="username" placeholder="Type your username">
+            <input class="input100" type="text" name="username" placeholder="Type your username" :value="username">
             <span class="focus-input100"></span>
           </div>
 
           <div class="wrap-input100 validate-input" data-validate="Password is required">
             <span class="label-input100">Password</span>
-            <input class="input100" type="password" name="pass" placeholder="Type your password">
+            <input class="input100" type="password" name="pass" placeholder="Type your password" :value="password">
             <span class="focus-input100"></span>
           </div>
 
@@ -29,7 +29,7 @@
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
-              <button class="login100-form-btn">
+              <button class="login100-form-btn" @click="login" :disabled="loginDisabled">
                 Login
               </button>
             </div>
@@ -43,7 +43,24 @@
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data: function () {
+    return {
+      loginDisabled: false,
+      username: '',
+      password: ''
+    }
+  },
+
+  mounted () {
+
+  },
+
+  methods: {
+    login: function () {
+      console.log('username : ' + this.username + 'password' + this.password)
+    }
+  }
 }
 </script>
 
