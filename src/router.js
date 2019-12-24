@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import { routes } from './menus.js'
-
 const routerPush = Router.prototype.push
 Router.prototype.push = function push (location) {
   return routerPush.call(this, location).catch(err => err)
@@ -15,10 +13,13 @@ Router.prototype.replace = function replace (location) {
 
 Vue.use(Router)
 
-console.log(routes())
-
 const routeConfig = {
-  routes: routes()
+  base: '/app/',
+  routes: [
+    {
+
+  }
+  ]
 }
 
 export default new Router(routeConfig)

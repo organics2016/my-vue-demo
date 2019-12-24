@@ -27,17 +27,17 @@
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
           <Menu theme="light" width="auto">
-            <div v-for="menu in menus" :key="menu.auth">
-              <Submenu :name="menu.auth" v-show="menu.children">
+            <div v-for="menu in menus" :key="menu.id">
+              <Submenu :name="menu.id" v-show="menu.children">
                 <template slot="title">
                   <Icon :type="menu.icon"/>
                   {{menu.name}}
                 </template>
-                <MenuItem v-for="children in menu.children" :name="children.auth" :key="children.auth" :to="children.path">
+                <MenuItem v-for="children in menu.children" :name="children.id" :key="children.id" :to="children.path">
                     {{children.name}}
                 </MenuItem>
               </Submenu>
-              <MenuItem v-show="!menu.children" :name="menu.auth" :to="menu.path">
+              <MenuItem v-show="!menu.children" :name="menu.id" :to="menu.path">
                   <Icon :type="menu.icon"/>
                   {{menu.name}}
               </MenuItem>
@@ -60,8 +60,8 @@
 </template>
 
 <script>
-// import { menus } from '../../menus.js'
-import { adminMenus } from '../../menus.js'
+import { menus } from '@/menus.js'
+import permissions from '@/db/permissions.json'
 
 export default {
   name: 'home',
@@ -71,8 +71,7 @@ export default {
     }
   },
   mounted () {
-    const permissions = ['/item1', '/item1/option1']
-    this.menus = adminMenus(permissions)
+    this.menus = menus(permissions)
     console.log(this.menus)
   }
 }

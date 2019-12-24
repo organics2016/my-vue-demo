@@ -4,6 +4,7 @@ import HelloWorld from './views/hello/HelloWorld.vue'
 
 const menuData = [
   {
+    id: '0',
     name: '控制台首页',
     icon: 'ios-navigate',
     path: '/home',
@@ -11,10 +12,12 @@ const menuData = [
     component: Home
   },
   {
+    id: '1',
     name: 'Item 1',
     icon: 'ios-navigate',
     auth: '/item1',
     children: [{
+      id: '1-1',
       name: 'Option 1',
       path: '/item1/option1',
       auth: '/item1/option1',
@@ -22,10 +25,12 @@ const menuData = [
     }]
   },
   {
+    id: '2',
     name: 'Item 2',
     icon: 'ios-navigate',
     auth: '/item2',
     children: [{
+      id: '1-2',
       name: 'Option 1',
       path: '/item2/option1',
       auth: '/item2/option1',
@@ -63,18 +68,20 @@ function menus2Router (menus) {
     menus.map((menu) => {
       const route = {
         path: menu.path,
-        name: menu.name,
+        name: menu.path,
         component: menu.component
       }
 
       return Array.isArray(menu.children) ? menus2Router(menu.children) : route
     })
 
-  ).filter(route => route.path !== undefined)
+  ).filter(route => route.path !== undefined && Object.keys(route.path).length !== 0)
 }
 
 export const menus = (permissions) => matchAuth(menuData, permissions, false)
 
 export const adminMenus = () => matchAuth(menuData, null, true)
 
-export const routes = () => menus2Router(menuData)
+export const routes = (permissions) => menus2Router(menus(permissions))
+
+export const adminRoutes = () => menus2Router(adminMenus())
