@@ -17,8 +17,21 @@ const routeConfig = {
   base: '/app/',
   routes: [
     {
-
-  }
+      path: '/',
+      redirect: '/login'
+    },
+    {
+      path: '/login',
+      component: () => import(/* webpackChunkName: "about" */ './views/login/Login.vue')
+    },
+    {
+      path: '/error/:errorCode',
+      component: () => import(/* webpackChunkName: "about" */ './views/error/Error.vue')
+    },
+    {
+      path: '*',
+      redirect: '/error/404'
+    }
   ]
 }
 
