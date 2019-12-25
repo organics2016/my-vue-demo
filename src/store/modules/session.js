@@ -1,21 +1,28 @@
 export default {
 
+  namespaced: true,
+
   state: {
-    username: '',
-    isLogin: false,
-    token: '',
-    user: {}
+    session: {
+      userid: '',
+      username: '',
+      nickname: '',
+      token: '',
+      isLogin: false,
+      user: {}
+    }
   },
   mutations: {
-    login (state, session) {
-
+    cacheSession (state, session) {
+      state.session.username = session.username
+      state.session.isLogin = true
+      state.session.username = session.token
+      state.session.user = session
     },
 
-    logout (state) {
+    unCacheSession (state) {
+      state.session = {}
     }
 
-  },
-  actions: { ... },
-  getters: { ... }
-
+  }
 }

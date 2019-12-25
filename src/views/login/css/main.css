@@ -379,6 +379,8 @@ iframe {
 
 .validate-input {
   position: relative;
+  float: right;
+  color: red;
 }
 
 .alert-validate::before {
