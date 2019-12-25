@@ -59,6 +59,8 @@ export default {
   methods: {
     login: function () {
       console.log('username : ' + this.username + 'password' + this.password)
+
+      this.$router.replace('/home')
     }
   }
 }
