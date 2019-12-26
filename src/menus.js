@@ -1,15 +1,12 @@
-import Home from './views/home/Home.vue'
-import Test from './views/test/Test.vue'
-import HelloWorld from './views/hello/HelloWorld.vue'
 
 const menuData = [
   {
     id: '0',
-    name: '控制台首页',
+    name: '茵蒂克丝',
     icon: 'ios-navigate',
-    path: '/home',
-    auth: '/home',
-    component: Home
+    path: 'index',
+    auth: 'index',
+    component: () => import(/* webpackChunkName: "about" */ './views/index/Index.vue')
   },
   {
     id: '1',
@@ -19,9 +16,9 @@ const menuData = [
     children: [{
       id: '1-1',
       name: 'Option 1',
-      path: '/item1/option1',
-      auth: '/item1/option1',
-      component: Test
+      path: 'item1/option1',
+      auth: 'item1/option1',
+      component: () => import(/* webpackChunkName: "about" */ './views/upload/Upload.vue')
     }]
   },
   {
@@ -32,22 +29,20 @@ const menuData = [
     children: [{
       id: '1-2',
       name: 'Option 1',
-      path: '/item2/option1',
-      auth: '/item2/option1',
-      component: HelloWorld
+      path: 'item2/option1',
+      auth: 'item2/option1',
+      component: () => import(/* webpackChunkName: "about" */ './views/hello/HelloWorld.vue')
     }]
   }
 ]
 
 // const uuidv4 = require('uuid/v4')
 
-function matchAuth (menus, permissions, admin) {
-  if (admin) {
-    return menuData
-  }
-
+function matchAuth (menus, permissions) {
   if (permissions === undefined || permissions.length === 0) {
     return []
+  } else if (permissions.length === 1 && permissions[0] === '*') {
+    return menuData
   }
 
   return menus.filter((item) => {
@@ -68,7 +63,6 @@ function menus2Router (menus) {
     menus.map((menu) => {
       const route = {
         path: menu.path,
-        name: menu.path,
         component: menu.component
       }
 
@@ -78,10 +72,14 @@ function menus2Router (menus) {
   ).filter(route => route.path !== undefined && Object.keys(route.path).length !== 0)
 }
 
-export const menus = (permissions) => matchAuth(menuData, permissions, false)
+// 根据权限获取菜单
+export const menus = (permissions) => matchAuth(menuData, permissions)
 
-export const adminMenus = () => matchAuth(menuData, null, true)
+// 管理员获取菜单
+export const adminMenus = () => matchAuth(menuData, ['*'])
 
+// 根据权限获取路由
 export const routes = (permissions) => menus2Router(menus(permissions))
 
+// 管理员获取路由
 export const adminRoutes = () => menus2Router(adminMenus())

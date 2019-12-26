@@ -51,7 +51,7 @@
             <BreadcrumbItem>Layout</BreadcrumbItem>
           </Breadcrumb>
           <Content :style="{padding: '24px', minHeight: '800px', background: '#fff'}">
-            Content
+            <router-view/>
           </Content>
         </Layout>
       </Layout>
@@ -60,8 +60,11 @@
 </template>
 
 <script>
-// import { menus } from '@/menus.js'
-// import permissions from '@/db/permissions.json'
+import { createNamespacedHelpers } from 'vuex'
+
+import { menus } from '../../menus'
+
+const { mapState } = createNamespacedHelpers('session')
 
 export default {
   name: 'home',
@@ -70,9 +73,13 @@ export default {
       menus: []
     }
   },
+
+  computed: {
+    ...mapState(['session'])
+  },
+
   mounted () {
-    // this.menus = menus(permissions)
-    // console.log(this.menus)
+    this.menus = menus(this.session.permissions)
   }
 }
 </script>

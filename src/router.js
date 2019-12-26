@@ -14,7 +14,6 @@ Router.prototype.replace = function replace (location) {
 Vue.use(Router)
 
 const routeConfig = {
-  base: '/app/',
   routes: [
     {
       path: '/',
@@ -23,10 +22,6 @@ const routeConfig = {
     {
       path: '/login',
       component: () => import(/* webpackChunkName: "about" */ './views/login/Login.vue')
-    },
-    {
-      path: '/home',
-      component: () => import(/* webpackChunkName: "about" */ './views/home/Home.vue')
     }
     // {
     //   path: '/error/:errorCode',

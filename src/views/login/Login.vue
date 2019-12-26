@@ -45,7 +45,11 @@
 
 <script>
 
+import { MESSAGE_CONFIG } from '../../common/appconfig'
+
 import { createNamespacedHelpers } from 'vuex'
+
+import { routes } from '../../menus'
 
 const { mapState, mapMutations } = createNamespacedHelpers('session')
 
@@ -91,28 +95,48 @@ export default {
 
       const session = {
         username: this.username,
-        token: 'xcvdfsefdf'
+        token: 'xcvdfsefdf',
+        permissions: ['*']
       }
 
       this.cacheSession(session)
 
-      console.log(this.session)
-      //
+      const permissions = this.session.permissions
 
+      if (!Array.isArray(permissions) || permissions.length === 0) {
+        this.$Message.error(MESSAGE_CONFIG('您没有任何操作权限，请联系系统管理员'))
+        return
+      }
 
+      const subRoutes = routes(permissions)
 
-      this.$router.replace('/home')
+      subRoutes.push(
+        {
+          path: 'error/:errorCode',
+          component: () => import(/* webpackChunkName: "about" */ '../../components/error/Error.vue')
+        },
+        {
+          path: '*',
+          redirect: 'error/404'
+        }
+      )
+
+      const router = this.$router
+
+      router.addRoutes([
+        {
+          path: '/home',
+          component: () => import(/* webpackChunkName: "about" */ '../home/Home.vue'),
+          children: subRoutes
+        }
+      ])
+
+      if ('redirect' in router.currentRoute.query) {
+        router.replace(decodeURIComponent(router.currentRoute.query.redirect))
+      } else {
+        this.$router.replace('/home/' + subRoutes[0].path)
+      }
     }
-  },
-
-  beforeRouteLeave (to, from, next) {
-    // 导航离开该组件的对应路由时调用
-    // 可以访问组件实例 `this`
-
-    // 正常离开login进入 home，但是如果离开路由有值，则认为应该返回最初值
-    console.log(to)
-    console.log(from)
-    next()
   }
 }
 </script>
