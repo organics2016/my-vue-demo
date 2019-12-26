@@ -5,11 +5,27 @@
 </template>
 
 <script>
+
+import { createNamespacedHelpers } from 'vuex'
+
+// import { routes } from '../../menus'
+
+const { mapState } = createNamespacedHelpers('session')
+
 export default {
   name: 'app',
 
+  computed: {
+    ...mapState(['session'])
+  },
+
   mounted () {
-    this.$router.replace(this.$router.options.routes[0].path)
+    // TODO 将session数据存入localStorage，或 sessionStorage
+    if (this.session.isLogin) {
+      this.$router.forward()
+    } else {
+      this.$router.replace({ name: 'login' })
+    }
   }
 }
 </script>

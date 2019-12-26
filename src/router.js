@@ -20,6 +20,7 @@ const routeConfig = {
       redirect: '/login'
     },
     {
+      name: 'login',
       path: '/login',
       component: () => import(/* webpackChunkName: "about" */ './views/login/Login.vue')
     }
