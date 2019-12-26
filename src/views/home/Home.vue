@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import { menus } from '@/menus.js'
-import permissions from '@/db/permissions.json'
+// import { menus } from '@/menus.js'
+// import permissions from '@/db/permissions.json'
 
 export default {
   name: 'home',
@@ -71,8 +71,8 @@ export default {
     }
   },
   mounted () {
-    this.menus = menus(permissions)
-    console.log(this.menus)
+    // this.menus = menus(permissions)
+    // console.log(this.menus)
   }
 }
 </script>

@@ -98,8 +98,21 @@ export default {
 
       console.log(this.session)
       //
-      // this.$router.replace('/home')
+
+
+
+      this.$router.replace('/home')
     }
+  },
+
+  beforeRouteLeave (to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+
+    // 正常离开login进入 home，但是如果离开路由有值，则认为应该返回最初值
+    console.log(to)
+    console.log(from)
+    next()
   }
 }
 </script>
