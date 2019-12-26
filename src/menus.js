@@ -50,7 +50,7 @@ function matchAuth (menus, permissions) {
   }).map((item) => {
     const result = Object.assign({}, item)
     if (result.children) {
-      result.children = matchAuth(result.children, permissions, false)
+      result.children = matchAuth(result.children, permissions)
     }
     return result
   })
@@ -62,6 +62,7 @@ function menus2Router (menus) {
   return flatten(
     menus.map((menu) => {
       const route = {
+        name: menu.id,
         path: menu.path,
         component: menu.component
       }

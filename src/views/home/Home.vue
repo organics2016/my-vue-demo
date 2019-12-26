@@ -26,18 +26,18 @@
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu theme="light" width="auto">
+          <Menu theme="light" width="auto" @on-select="clickMenu" :active-name="menuId">
             <div v-for="menu in menus" :key="menu.id">
               <Submenu :name="menu.id" v-show="menu.children">
                 <template slot="title">
                   <Icon :type="menu.icon"/>
                   {{menu.name}}
                 </template>
-                <MenuItem v-for="children in menu.children" :name="children.id" :key="children.id" :to="children.path">
+                <MenuItem v-for="children in menu.children" :name="children.id" :key="children.id">
                     {{children.name}}
                 </MenuItem>
               </Submenu>
-              <MenuItem v-show="!menu.children" :name="menu.id" :to="menu.path">
+              <MenuItem v-show="!menu.children" :name="menu.id">
                   <Icon :type="menu.icon"/>
                   {{menu.name}}
               </MenuItem>
@@ -74,12 +74,21 @@ export default {
     }
   },
 
+  props: ['menuId'],
+
   computed: {
     ...mapState(['session'])
   },
 
   mounted () {
     this.menus = menus(this.session.permissions)
+  },
+
+  methods: {
+    clickMenu: function (menuId) {
+      console.log(this.$route)
+      this.$router.push({ name: menuId })
+    }
   }
 }
 </script>

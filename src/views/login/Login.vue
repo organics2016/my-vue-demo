@@ -127,14 +127,16 @@ export default {
         {
           path: '/home',
           component: () => import(/* webpackChunkName: "about" */ '../home/Home.vue'),
+          props: true,
           children: subRoutes
         }
       ])
 
-      if ('redirect' in router.currentRoute.query) {
-        router.replace(decodeURIComponent(router.currentRoute.query.redirect))
+      if ('menuId' in router.currentRoute.params) {
+        // TODO 先判断传过来的 menuId 是否符合最新的subRoutes
+        router.replace({ name: router.currentRoute.params.menuId, params: { menuId: router.currentRoute.params.menuId } })
       } else {
-        this.$router.replace('/home/' + subRoutes[0].path)
+        this.$router.replace({ name: subRoutes[0].name, params: { menuId: subRoutes[0].name } })
       }
     }
   }
