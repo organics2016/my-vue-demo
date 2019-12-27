@@ -94,7 +94,7 @@ export default {
       const session = {
         username: this.username,
         token: 'xcvdfsefdf',
-        permissions: []
+        permissions: ['*']
       }
 
       this.cacheSession(session)

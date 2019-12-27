@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store/store'
 
 const routerPush = Router.prototype.push
 Router.prototype.push = function push (location) {
@@ -35,4 +36,10 @@ const routeConfig = {
   ]
 }
 
-export default new Router(routeConfig)
+const router = new Router(routeConfig)
+
+router.afterEach((to, from) => {
+  store.commit('session/cacheRouterHistory', to)
+})
+
+export default router

@@ -40,6 +40,14 @@ export default {
         isLogin: false,
         user: {}
       }
+    },
+
+    cacheRouterHistory (state, route) {
+      if (route.name === null || route.name === undefined) {
+        return
+      }
+      state.userRouter.lastActiveRoute.name = route.name
+      state.userRouter.lastActiveRoute.path = route.path
     }
   },
 
