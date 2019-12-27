@@ -18,7 +18,7 @@ const STORE_NAME = 'ink.organics.backend.store'
 function parse (storeJson) {
   if (storeJson) {
     const hStore = JSON.parse(storeJson)
-    if (hStore && hStore.session && Object.keys(hStore.session).length !== 0) {
+    if (hStore && hStore.session && Object.keys(hStore.session).length === Object.keys(session.state).length) {
       return Object.assign({}, hStore)
     }
   }

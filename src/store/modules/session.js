@@ -16,9 +16,7 @@ export default {
       user: {}
     },
     userRouter: {
-      routes: [],
-      lastActiveRoute: {},
-      defaultActiveRoute: {}
+      lastActiveRoute: {}
     }
   },
   mutations: {
@@ -30,11 +28,27 @@ export default {
       state.userSession.permissions = session.permissions
       state.userSession.isLogin = true
       state.userSession.user = session
+    },
 
+    unCacheSession (state) {
+      state.userSession = {
+        userid: '',
+        username: '',
+        nickname: '',
+        token: '',
+        permissions: [],
+        isLogin: false,
+        user: {}
+      }
+    }
+  },
+
+  getters: {
+    userRoutes: state => {
       const subRoutes = routes(state.userSession.permissions)
-      // 没有路由匹配不对路由store做任何处理
+
       if (subRoutes.length === 0) {
-        return
+        return []
       }
 
       subRoutes.push(
@@ -48,32 +62,40 @@ export default {
         }
       )
 
-      state.userRouter.routes = [
+      return [
         {
           path: '/home',
           component: () => import(/* webpackChunkName: "about" */ '../../views/home/Home.vue'),
           children: subRoutes
         }
       ]
-
-      state.userRouter.defaultActiveRoute = subRoutes[0]
     },
 
-    unCacheSession (state) {
-      state.userSession = {
-        userid: '',
-        username: '',
-        nickname: '',
-        token: '',
-        permissions: [],
-        isLogin: false,
-        user: {}
+    userDefaultActiveRoute: (state, getters) => {
+      const userRoutes = getters.userRoutes
+      if (userRoutes.length === 0) {
+        return {}
       }
-      state.userRouter = {
-        routes: [],
-        lastActiveRoute: {},
-        defaultActiveRoute: {}
+      return userRoutes[0].children[0]
+    },
+
+    userLastActiveRoute: (state) => {
+      return state.userRouter.lastActiveRoute
+    },
+
+    userActiveRoute: (state, getters) => {
+      const userLastActiveRoute = getters.userLastActiveRoute
+      if (Object.keys(userLastActiveRoute).length !== 0) {
+        // 检查最新的 userRouter 里是否包含 userLastActiveRoute
+        const userRoutes = getters.userRoutes
+        if (userRoutes.length !== 0) {
+          if (userRoutes[0].children.filter((route) => userLastActiveRoute.name === route.name).length !== 0) {
+            return userLastActiveRoute
+          }
+        }
       }
+      return getters.userDefaultActiveRoute
     }
+
   }
 }

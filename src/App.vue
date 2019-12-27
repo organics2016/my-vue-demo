@@ -8,13 +8,14 @@
 
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState } = createNamespacedHelpers('session')
+const { mapState, mapGetters } = createNamespacedHelpers('session')
 
 export default {
   name: 'app',
 
   computed: {
-    ...mapState(['userSession', 'userRouter'])
+    ...mapState(['userSession']),
+    ...mapGetters(['userRoutes', 'userActiveRoute'])
   },
 
   created () {
@@ -23,18 +24,9 @@ export default {
       return
     }
 
-    if (this.userRouter.routes.length === 0) {
-      this.$router.replace({ name: 'login' })
-      return
-    }
+    this.$router.addRoutes(this.userRoutes)
 
-    this.$router.addRoutes(this.userRouter.routes)
-
-    if ('name' in this.userRouter.lastActiveRoute) {
-      this.$router.replace({ name: this.userRouter.lastActiveRoute.name })
-    } else {
-      this.$router.replace({ name: this.userRouter.defaultActiveRoute.name })
-    }
+    this.$router.replace({ name: this.userActiveRoute.name })
   },
 
   mounted () {

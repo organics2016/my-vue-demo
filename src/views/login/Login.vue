@@ -49,7 +49,7 @@ import { MESSAGE_CONFIG } from '../../common/appconfig'
 
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState, mapMutations } = createNamespacedHelpers('session')
+const { mapGetters, mapMutations } = createNamespacedHelpers('session')
 
 const pattern = /^([a-z]|[A-Z]|[0-9]){5,}$/
 
@@ -66,7 +66,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['userSession', 'userRouter'])
+    ...mapGetters(['userRoutes', 'userActiveRoute'])
   },
 
   mounted () {
@@ -75,7 +75,7 @@ export default {
 
   methods: {
 
-    ...mapMutations(['cacheSession']),
+    ...mapMutations(['cacheSession', 'unCacheSession']),
 
     login: function () {
       console.log('username : ' + this.username + '  password : ' + this.password)
@@ -94,23 +94,20 @@ export default {
       const session = {
         username: this.username,
         token: 'xcvdfsefdf',
-        permissions: ['*']
+        permissions: []
       }
 
       this.cacheSession(session)
 
-      if (this.userRouter.routes.length === 0) {
+      if (this.userRoutes.length === 0) {
+        this.unCacheSession()
         this.$Message.error(MESSAGE_CONFIG('您没有任何操作权限，请联系系统管理员'))
         return
       }
 
-      this.$router.addRoutes(this.userRouter.routes)
+      this.$router.addRoutes(this.userRoutes)
 
-      if ('name' in this.userRouter.lastActiveRoute) {
-        this.$router.replace({ name: this.userRouter.lastActiveRoute.name })
-      } else {
-        this.$router.replace({ name: this.userRouter.defaultActiveRoute.name })
-      }
+      this.$router.replace({ name: this.userActiveRoute.name })
     }
   }
 }
