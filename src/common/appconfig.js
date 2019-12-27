@@ -7,5 +7,3 @@ export const MESSAGE_CONFIG = function (content) {
     background: true
   }
 }
-
-export const STORE_NAME = 'ink.organics.vuex.store'

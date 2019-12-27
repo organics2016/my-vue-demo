@@ -26,7 +26,7 @@
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu theme="light" width="auto" @on-select="clickMenu" :active-name="menuId">
+          <Menu theme="light" width="auto" @on-select="clickMenu" :active-name="userRouter.lastActiveRoute.name">
             <div v-for="menu in menus" :key="menu.id">
               <Submenu :name="menu.id" v-show="menu.children">
                 <template slot="title">
@@ -62,7 +62,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-import { menus } from '../../menus'
+import { menus } from '../../modules/menus'
 
 const { mapState } = createNamespacedHelpers('session')
 
@@ -74,19 +74,16 @@ export default {
     }
   },
 
-  props: ['menuId'],
-
   computed: {
-    ...mapState(['session'])
+    ...mapState(['userSession', 'userRouter'])
   },
 
   mounted () {
-    this.menus = menus(this.session.permissions)
+    this.menus = menus(this.userSession.permissions)
   },
 
   methods: {
     clickMenu: function (menuId) {
-      console.log(this.$route)
       this.$router.push({ name: menuId })
     }
   }

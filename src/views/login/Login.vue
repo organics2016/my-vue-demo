@@ -49,8 +49,6 @@ import { MESSAGE_CONFIG } from '../../common/appconfig'
 
 import { createNamespacedHelpers } from 'vuex'
 
-import { routes } from '../../menus'
-
 const { mapState, mapMutations } = createNamespacedHelpers('session')
 
 const pattern = /^([a-z]|[A-Z]|[0-9]){5,}$/
@@ -68,7 +66,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['session'])
+    ...mapState(['userSession', 'userRouter'])
   },
 
   mounted () {
@@ -101,50 +99,18 @@ export default {
 
       this.cacheSession(session)
 
-      const permissions = this.session.permissions
-
-      if (!Array.isArray(permissions) || permissions.length === 0) {
+      if (this.userRouter.routes.length === 0) {
         this.$Message.error(MESSAGE_CONFIG('您没有任何操作权限，请联系系统管理员'))
         return
       }
 
-      const subRoutes = routes(permissions)
+      this.$router.addRoutes(this.userRouter.routes)
 
-      subRoutes.push(
-        {
-          path: 'error/:errorCode',
-          component: () => import(/* webpackChunkName: "about" */ '../../components/error/Error.vue')
-        },
-        {
-          path: '*',
-          redirect: 'error/404'
-        }
-      )
-
-      const router = this.$router
-
-      router.addRoutes([
-        {
-          path: '/home',
-          component: () => import(/* webpackChunkName: "about" */ '../home/Home.vue'),
-          props: true,
-          children: subRoutes
-        }
-      ])
-
-      if ('menuId' in router.currentRoute.params) {
-        // 先判断传过来的 menuId 是否符合最新的subRoutes
-        const hasPermissions = subRoutes.filter((item) => {
-          return router.currentRoute.params.menuId === item.name
-        }).length
-
-        if (hasPermissions !== 0) {
-          router.replace({ name: router.currentRoute.params.menuId, params: { menuId: router.currentRoute.params.menuId } })
-          return
-        }
+      if ('name' in this.userRouter.lastActiveRoute) {
+        this.$router.replace({ name: this.userRouter.lastActiveRoute.name })
+      } else {
+        this.$router.replace({ name: this.userRouter.defaultActiveRoute.name })
       }
-
-      this.$router.replace({ name: subRoutes[0].name, params: { menuId: subRoutes[0].name } })
     }
   }
 }

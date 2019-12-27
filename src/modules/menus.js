@@ -6,7 +6,7 @@ const menuData = [
     icon: 'ios-navigate',
     path: 'index',
     auth: 'index',
-    component: () => import(/* webpackChunkName: "about" */ './views/index/Index.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/index/Index.vue')
   },
   {
     id: '1',
@@ -18,7 +18,7 @@ const menuData = [
       name: 'Option 1',
       path: 'item1/option1',
       auth: 'item1/option1',
-      component: () => import(/* webpackChunkName: "about" */ './views/upload/Upload.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/upload/Upload.vue')
     }]
   },
   {
@@ -31,7 +31,7 @@ const menuData = [
       name: 'Option 1',
       path: 'item2/option1',
       auth: 'item2/option1',
-      component: () => import(/* webpackChunkName: "about" */ './views/hello/HelloWorld.vue')
+      component: () => import(/* webpackChunkName: "about" */ '../views/hello/HelloWorld.vue')
     }]
   }
 ]
