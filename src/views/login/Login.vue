@@ -133,11 +133,18 @@ export default {
       ])
 
       if ('menuId' in router.currentRoute.params) {
-        // TODO 先判断传过来的 menuId 是否符合最新的subRoutes
-        router.replace({ name: router.currentRoute.params.menuId, params: { menuId: router.currentRoute.params.menuId } })
-      } else {
-        this.$router.replace({ name: subRoutes[0].name, params: { menuId: subRoutes[0].name } })
+        // 先判断传过来的 menuId 是否符合最新的subRoutes
+        const hasPermissions = subRoutes.filter((item) => {
+          return router.currentRoute.params.menuId === item.name
+        }).length
+
+        if (hasPermissions !== 0) {
+          router.replace({ name: router.currentRoute.params.menuId, params: { menuId: router.currentRoute.params.menuId } })
+          return
+        }
       }
+
+      this.$router.replace({ name: subRoutes[0].name, params: { menuId: subRoutes[0].name } })
     }
   }
 }
