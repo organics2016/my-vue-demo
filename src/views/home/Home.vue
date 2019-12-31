@@ -6,18 +6,18 @@
           <div class="layout-logo"></div>
           <div class="layout-nav">
             <div :style="{float: 'right'}">
-<!--              <MenuItem name="1">-->
-<!--                <Icon type="ios-navigate"></Icon>-->
-<!--                Item 1-->
-<!--              </MenuItem>-->
-<!--              <MenuItem name="2">-->
-<!--                <Icon type="ios-keypad"></Icon>-->
-<!--                Item 2-->
-<!--              </MenuItem>-->
-<!--              <MenuItem name="3">-->
-<!--                <Icon type="ios-analytics"></Icon>-->
-<!--                Item 3-->
-<!--              </MenuItem>-->
+              <!--              <MenuItem name="1">-->
+              <!--                <Icon type="ios-navigate"></Icon>-->
+              <!--                Item 1-->
+              <!--              </MenuItem>-->
+              <!--              <MenuItem name="2">-->
+              <!--                <Icon type="ios-keypad"></Icon>-->
+              <!--                Item 2-->
+              <!--              </MenuItem>-->
+              <!--              <MenuItem name="3">-->
+              <!--                <Icon type="ios-analytics"></Icon>-->
+              <!--                Item 3-->
+              <!--              </MenuItem>-->
               <MenuItem name="logout">
                 <Icon type="ios-paper"></Icon>
                 Logout

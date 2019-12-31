@@ -3,7 +3,7 @@ import Router from './router'
 import Store from './store/store'
 
 import ViewUI from 'view-design'
-import 'view-design/dist/styles/iview.css'
+import './app.less'
 
 import App from './App.vue'
 
