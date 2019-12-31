@@ -2,17 +2,47 @@
   <div id="notfound">
     <div class="notfound">
       <div class="notfound-404">
-        <h1>404</h1>
+        <h1>{{ errorCode }}</h1>
       </div>
-      <h2>Oops, The Page you are looking for can't be found!</h2>
-      <a href="#"><span class="arrow"></span>Return To Homepage</a>
+      <h2>{{errorCodeMessage}}</h2>
+      <a href="#" @click="returnHomepage"><span class="arrow"></span>Return To Homepage</a>
     </div>
   </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapGetters } = createNamespacedHelpers('session')
+
 export default {
-  name: 'Error'
+  name: 'Error',
+  props: ['errorCode'],
+  data: function () {
+    return {
+      errorCodeMessage: ''
+    }
+  },
+  computed: {
+    ...mapGetters(['userDefaultActiveRoute'])
+  },
+  mounted () {
+    switch (this.errorCode) {
+      case '401':
+        this.errorCodeMessage = ''
+        return
+      case '403':
+        this.errorCodeMessage = ''
+        return
+      default:
+        this.errorCodeMessage = 'Oops, The Page you are looking for can\'t be found!'
+    }
+  },
+  methods: {
+    returnHomepage: function () {
+      this.$router.replace({ name: this.userDefaultActiveRoute.name })
+    }
+  }
 }
 </script>
 
@@ -107,6 +137,8 @@ export default {
     border-radius: 15px;
     text-decoration: none;
     color: #39b1cb;
+    position: relative;
+    top: 15px;
   }
 
   .notfound a > .arrow {

@@ -61,7 +61,8 @@ export default {
       subRoutes.push(
         {
           path: 'error/:errorCode',
-          component: () => import(/* webpackChunkName: "about" */ '../../components/error/Error.vue')
+          component: () => import(/* webpackChunkName: "about" */ '../../components/error/Error.vue'),
+          props: true
         },
         {
           path: '*',
