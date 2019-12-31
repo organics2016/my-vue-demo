@@ -2,25 +2,27 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Menu mode="horizontal" theme="dark">
+        <Menu mode="horizontal" theme="dark" @on-select="clickHeaderMenu">
           <div class="layout-logo"></div>
           <div class="layout-nav">
-            <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>
-              Item 1
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>
-              Item 2
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>
-              Item 3
-            </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>
-              Item 4
-            </MenuItem>
+            <div :style="{float: 'right'}">
+<!--              <MenuItem name="1">-->
+<!--                <Icon type="ios-navigate"></Icon>-->
+<!--                Item 1-->
+<!--              </MenuItem>-->
+<!--              <MenuItem name="2">-->
+<!--                <Icon type="ios-keypad"></Icon>-->
+<!--                Item 2-->
+<!--              </MenuItem>-->
+<!--              <MenuItem name="3">-->
+<!--                <Icon type="ios-analytics"></Icon>-->
+<!--                Item 3-->
+<!--              </MenuItem>-->
+              <MenuItem name="logout">
+                <Icon type="ios-paper"></Icon>
+                Logout
+              </MenuItem>
+            </div>
           </div>
         </Menu>
       </Header>
@@ -34,12 +36,12 @@
                   {{menu.name}}
                 </template>
                 <MenuItem v-for="children in menu.children" :name="children.id" :key="children.id">
-                    {{children.name}}
+                  {{children.name}}
                 </MenuItem>
               </Submenu>
               <MenuItem v-show="!menu.children" :name="menu.id">
-                  <Icon :type="menu.icon"/>
-                  {{menu.name}}
+                <Icon :type="menu.icon"/>
+                {{menu.name}}
               </MenuItem>
             </div>
           </Menu>
@@ -64,7 +66,7 @@ import { createNamespacedHelpers } from 'vuex'
 
 import { menus } from '../../modules/menus'
 
-const { mapState } = createNamespacedHelpers('session')
+const { mapState, mapMutations } = createNamespacedHelpers('session')
 
 export default {
   name: 'home',
@@ -83,8 +85,19 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['unCacheSession']),
+
+    clickHeaderMenu: function (methodsId) {
+      this[methodsId]()
+    },
+
     clickMenu: function (menuId) {
       this.$router.push({ name: menuId })
+    },
+
+    logout: function () {
+      this.unCacheSession()
+      this.$router.replace({ name: 'login' })
     }
   }
 }

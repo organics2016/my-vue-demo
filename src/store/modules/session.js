@@ -77,6 +77,10 @@ export default {
           path: '/home',
           component: () => import(/* webpackChunkName: "about" */ '../../views/home/Home.vue'),
           children: subRoutes
+        },
+        {
+          path: '*',
+          redirect: '/login'
         }
       ]
     },
