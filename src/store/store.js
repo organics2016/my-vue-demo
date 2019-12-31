@@ -19,7 +19,13 @@ function parse (storeJson) {
   if (storeJson) {
     const hStore = JSON.parse(storeJson)
     if (hStore && hStore.session && Object.keys(hStore.session).length === Object.keys(session.state).length) {
-      return Object.assign({}, hStore)
+      if (hStore.session.userSession.isLogin) {
+        return Object.assign({}, hStore)
+      } else {
+        // 在反序列化时，如果登陆已失效则初始化userSession对象
+        hStore.session.userSession = session.state.userSession
+        return Object.assign({}, hStore)
+      }
     }
   }
 }

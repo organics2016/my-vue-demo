@@ -43,9 +43,11 @@ export default {
     },
 
     cacheRouterHistory (state, route) {
-      if (route.name === null || route.name === undefined) {
+      // 只将有路由名称，并在home下的路由作为缓存记录
+      if (route.name === null || route.name === undefined || route.path.indexOf('/home') < 0) {
         return
       }
+
       state.userRouter.lastActiveRoute.name = route.name
       state.userRouter.lastActiveRoute.path = route.path
     }
