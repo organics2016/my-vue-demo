@@ -84,8 +84,16 @@ export default {
     this.menus = menus(this.userSession.permissions)
   },
 
+  beforeRouteUpdate (to, from, next) {
+    try {
+      this.cacheRouterHistory(to)
+    } finally {
+      next()
+    }
+  },
+
   methods: {
-    ...mapMutations(['unCacheSession']),
+    ...mapMutations(['unCacheSession', 'cacheRouterHistory']),
 
     clickHeaderMenu: function (methodsId) {
       this[methodsId]()
@@ -97,7 +105,7 @@ export default {
 
     logout: function () {
       this.unCacheSession()
-      this.$router.replace({ name: 'login' })
+      location.reload()
     }
   }
 }

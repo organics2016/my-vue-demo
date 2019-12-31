@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from './store/store'
 
 const routerPush = Router.prototype.push
 Router.prototype.push = function push (location) {
@@ -14,7 +13,7 @@ Router.prototype.replace = function replace (location) {
 
 Vue.use(Router)
 
-const routeConfig = {
+export default new Router({
   routes: [
     {
       name: 'login',
@@ -22,12 +21,4 @@ const routeConfig = {
       component: () => import(/* webpackChunkName: "about" */ './views/login/Login.vue')
     }
   ]
-}
-
-const router = new Router(routeConfig)
-
-router.afterEach((to, from) => {
-  store.commit('session/cacheRouterHistory', to)
 })
-
-export default router

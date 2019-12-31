@@ -43,13 +43,10 @@ export default {
     },
 
     cacheRouterHistory (state, route) {
-      // 只将有路由名称，并在home下的路由作为缓存记录
-      if (route.name === null || route.name === undefined || route.path.indexOf('/home') < 0) {
-        return
+      if (route.name && route.path && route.name.length !== 0 && route.path.length !== 0) {
+        state.userRouter.lastActiveRoute.name = route.name
+        state.userRouter.lastActiveRoute.path = route.path
       }
-
-      state.userRouter.lastActiveRoute.name = route.name
-      state.userRouter.lastActiveRoute.path = route.path
     }
   },
 
