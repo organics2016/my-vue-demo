@@ -1,17 +1,12 @@
 import Vue from 'vue'
-import Router from './router'
-import Store from './store/store'
-
-import ViewUI from 'view-design'
-import './app.less'
+import Router from './router/index'
+import Store from './store/index'
+import './viewui/index'
 
 import App from './App.vue'
 
 // config
 Vue.config.productionTip = false
-
-// registe
-Vue.use(ViewUI)
 
 new Vue({
   router: Router,
